@@ -24,7 +24,10 @@ mount -t tmpfs tmpfs /system/etc/security/cacerts
 mv /data/local/tmp/tmp-ca-copy/* /system/etc/security/cacerts/
 
 # Update the perms & selinux context labels
-set_perm_recursive /system/etc/security/cacerts root root 644 644 u:object_r:system_file:s0
+# set_perm_recursive /system/etc/security/cacerts root root 644 644 u:object_r:system_file:s0
+chmod 755 /system/etc/security/cacerts
+chmod 644 /system/etc/security/cacerts/*
+chcon -R u:object_r:system_security_cacerts_file:s0 /system/etc/security/cacerts
 
 /system/bin/echo "[$(date +%F) $(date +%T)] - TempFS Created & certs added" >> /data/local/tmp/conscrypt-trustusercerts-log.txt
 
